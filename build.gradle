@@ -1,0 +1,43 @@
+plugins {
+	id 'org.springframework.boot' version '2.1.6.RELEASE'
+	id 'io.freefair.lombok' version '3.8.1'
+	id 'java'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'cloud.nathangood'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+
+	def apacheCamelVersion = '2.24.1'
+
+	compileOnly 'org.projectlombok:lombok'
+
+	// Spring dependencies
+	implementation('org.springframework.boot:spring-boot-starter-web') {
+		exclude module: "spring-boot-starter-tomcat"
+	}
+	implementation 'org.springframework.boot:spring-boot-starter-undertow'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+	// Camel dependencies
+	implementation "org.apache.camel:camel-spring-boot-starter:${apacheCamelVersion}"
+	implementation "org.apache.camel:camel-stream-starter:${apacheCamelVersion}"
+	implementation "org.apache.camel:camel-rabbitmq-starter:${apacheCamelVersion}"
+	implementation "org.apache.camel:camel-kafka-starter:${apacheCamelVersion}"
+	implementation "org.apache.kafka:kafka-clients:2.3.0"
+
+	// Because JDK 11
+	implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359'
+
+	// Test dependencies
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.apache.camel:camel-test-spring:2.24.0'
+}
